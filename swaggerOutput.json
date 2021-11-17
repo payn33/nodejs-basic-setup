@@ -1,0 +1,450 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Pharma ",
+    "description": "Pharmacy stock inventory"
+  },
+  "host": "localhost:3001",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "User",
+      "description": "Routes"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "apiKey",
+      "scheme": "token",
+      "tokenFormat": {},
+      "in": "header",
+      "name": "x-access-token",
+      "description": "Some description..."
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/create_user": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "creates a new user, the phone number field should not begin with zero",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/userRes"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "login",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/otherLogin"
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/create_item": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "creates new stock item",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/items"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/items"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/get_items": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "gets all items in stock",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/items"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/edit_item/{id}": {
+      "patch": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "edits stock item",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "user id"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "success": "edited successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/delete_item/{id}": {
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "deletes stock item",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "user id"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "success": "deleted successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/create_order": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "description": "creates a new order and automatically updates the item quantity remaining, phone number should not begin with zero",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/orders"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/ordersRes"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "user": {
+      "type": "object",
+      "properties": {
+        "user_name": {
+          "type": "string",
+          "example": "string"
+        },
+        "password": {
+          "type": "string",
+          "example": "any"
+        },
+        "phone": {
+          "type": "string",
+          "example": "number"
+        }
+      }
+    },
+    "userRes": {
+      "type": "object",
+      "properties": {
+        "user_name": {
+          "type": "string",
+          "example": "string"
+        },
+        "password": {
+          "type": "string",
+          "example": "any"
+        },
+        "phone": {
+          "type": "string",
+          "example": "number"
+        },
+        "isAdmin": {
+          "type": "string",
+          "example": "boolean"
+        }
+      }
+    },
+    "login": {
+      "type": "object",
+      "properties": {
+        "user_name": {
+          "type": "string",
+          "example": "string"
+        },
+        "password": {
+          "type": "string",
+          "example": "any"
+        }
+      }
+    },
+    "otherLogin": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "any"
+        },
+        "isAdmin": {
+          "type": "string",
+          "example": "boolean"
+        }
+      }
+    },
+    "items": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "string"
+        },
+        "quantity": {
+          "type": "string",
+          "example": "Boolean"
+        },
+        "brand": {
+          "type": "string",
+          "example": "string"
+        }
+      }
+    },
+    "orders": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "use -id"
+              },
+              "name": {
+                "type": "string",
+                "example": "string"
+              },
+              "brand": {
+                "type": "string",
+                "example": "string"
+              },
+              "quantity": {
+                "type": "string",
+                "example": "number"
+              }
+            }
+          }
+        },
+        "customer_phone": {
+          "type": "string",
+          "example": "number"
+        }
+      }
+    },
+    "ordersRes": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "use -id"
+              },
+              "name": {
+                "type": "string",
+                "example": "string"
+              },
+              "brand": {
+                "type": "string",
+                "example": "string"
+              },
+              "quantity": {
+                "type": "string",
+                "example": "number"
+              }
+            }
+          }
+        },
+        "customer_phone": {
+          "type": "string",
+          "example": "number"
+        },
+        "created_at": {
+          "type": "string",
+          "example": "date"
+        },
+        "updated_at": {
+          "type": "string",
+          "example": "date"
+        }
+      }
+    }
+  }
+}
