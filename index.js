@@ -5,7 +5,7 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDocs = require("./swaggerOutput.json");
 const cors = require("cors");
 
-var whitelist = ["http://example1.com", "http://example2.com"];
+var whitelist = ["http://localhost:3001/", "https://soft-pharma-api.herokuapp.com/"];
 var corsOptions = {
   origin: (origin, callback) => {
     if (whitelist.indexOf(origin) !== -1) {
