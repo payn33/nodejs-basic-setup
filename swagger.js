@@ -12,7 +12,7 @@ const doc = {
     title: "Pharma ",
     description: "Pharmacy stock inventory",
   },
-  host: "localhost:3001",
+  host: "https://soft-pharma-api.herokuapp.com/",
   basePath: "/",
   schemes: ["http", "https"],
   consumes: ["application/json"],
